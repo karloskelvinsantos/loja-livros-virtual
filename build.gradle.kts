@@ -53,3 +53,8 @@ allOpen {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.withType<JavaCompile>().configureEach {
+	targetCompatibility = "24"
+	sourceCompatibility = "24"
+}
