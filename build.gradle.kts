@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
 	kotlin("jvm") version "2.2.21"
 	kotlin("plugin.spring") version "2.2.21"
@@ -12,7 +14,7 @@ description = "Loja de Livros Virtual"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -24,6 +26,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-h2console")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("tools.jackson.module:jackson-module-kotlin")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -36,6 +39,7 @@ dependencies {
 
 kotlin {
 	compilerOptions {
+		jvmTarget.set(JvmTarget.JVM_24)
 		freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
 	}
 }
@@ -48,4 +52,9 @@ allOpen {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile>().configureEach {
+	targetCompatibility = "24"
+	sourceCompatibility = "24"
 }
